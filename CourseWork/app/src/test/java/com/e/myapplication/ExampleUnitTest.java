@@ -1,4 +1,4 @@
-package com.coursework;
+package com.e.myapplication;
 
 import org.junit.Test;
 
