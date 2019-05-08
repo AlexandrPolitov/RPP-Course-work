@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Events> call, Response<Events> response) {
                 events = response.body();
                 if (!events.equals(null))
-                      Log.e("my", "ass level: " + String.valueOf(events.getCount()));
+                      Log.e("my", "*** level: " + String.valueOf(events.getCount()));
             }
 
             @Override
