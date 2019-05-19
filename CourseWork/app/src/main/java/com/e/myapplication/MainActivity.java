@@ -1,8 +1,12 @@
 package com.e.myapplication;
 
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -29,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private Events events;
 
-    private ListView navigationList;
-    private String[] navigationItems;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle barToggle;
 
 
 
@@ -38,13 +42,29 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Get backend from KudaGo
+        getBackendInfo();
 
-        navigationItems = getResources().getStringArray(R.array.dima_sanya_go);
-        navigationList = findViewById(R.id.left_drawer);
+        //Initializing of sideBar
+        drawerLayout = findViewById(R.id.drawerLayout);
+        barToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
 
-        navigationList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, navigationItems));
+        drawerLayout.addDrawerListener(barToggle);
+        barToggle.syncState();
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(barToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void getBackendInfo() {
         retrofit = new Retrofit.Builder().baseUrl(URL_JSON)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -55,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<Events> call, Response<Events> response) {
                 events = response.body();
                 if (!events.equals(null))
-                      Log.e("my", "*** lvдl: " + String.valueOf(events.getCount()));
+                    Log.e("my", "*** lvдl: " + String.valueOf(events.getCount()));
             }
 
             @Override

@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string-array name="dima_sanya_go">
-        <item>Личный кабинет</item>
-        <item>Город</item>
-        <item>Категории</item>
-        <item>Выйти</item>
-    </string-array>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name = "lk">Личный кабинет</string>
+    <string name = "city" >Город</string>
+    <string name = "categories">Категории</string>
+    <string name = "exit">Выйти</string>
 </resources>

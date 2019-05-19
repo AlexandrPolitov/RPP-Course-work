@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/lkItem"
+        android:title="@string/lk">
+    </item>
+    <item android:id="@+id/cityItem"
+        android:title="@string/city">
+    </item>
+    <item android:id="@+id/categoryItem"
+        android:title="@string/categories">
+    </item>
+    <item android:id="@+id/exitItem"
+        android:title="@string/exit">
+    </item>
+
+</menu>
