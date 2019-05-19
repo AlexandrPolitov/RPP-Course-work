@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/lkItem"
+        android:icon="@mipmap/baseline_person_black_18dp"
         android:title="@string/lk">
     </item>
     <item android:id="@+id/cityItem"
+        android:icon="@mipmap/baseline_location_city_black_18dp"
         android:title="@string/city">
     </item>
     <item android:id="@+id/categoryItem"
+        android:icon="@mipmap/baseline_category_black_18dp"
         android:title="@string/categories">
     </item>
     <item android:id="@+id/exitItem"
+        android:icon="@mipmap/baseline_exit_to_app_black_18dp"
         android:title="@string/exit">
     </item>
 
