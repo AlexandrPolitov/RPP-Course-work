@@ -2,6 +2,7 @@
     <string name="app_name">Da_Go</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name = "events">События</string>
     <string name = "lk">Личный кабинет</string>
     <string name = "city" >Город</string>
     <string name = "categories">Категории</string>
