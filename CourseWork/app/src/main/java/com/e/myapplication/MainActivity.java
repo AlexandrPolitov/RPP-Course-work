@@ -5,6 +5,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -12,9 +13,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.e.myapplication.Net.NetInterface;
+import com.e.myapplication.pojo.Event.Result;
 import com.e.myapplication.pojo.Events;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle barToggle;
 
+    List<Result> list;
+    RecyclerView recyclerView;
+
 
 
     @Override
@@ -53,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         barToggle.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
     }
 
     @Override
@@ -64,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void loadMainBoard() {
+//        recyclerView = findViewById(R.id.)
+    }
     private void getBackendInfo() {
         retrofit = new Retrofit.Builder().baseUrl(URL_JSON)
                 .addConverterFactory(GsonConverterFactory.create())
