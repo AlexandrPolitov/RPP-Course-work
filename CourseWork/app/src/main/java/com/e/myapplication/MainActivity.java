@@ -5,6 +5,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        getBackendInfo();
+
 
     }
 
@@ -72,9 +75,16 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void loadMainBoard() {
-//        recyclerView = findViewById(R.id.)
+    public void loadMainBoard(Events events) {
+        recyclerView = findViewById(R.id.items_recycler_view);
+        MyAdapter myAdapter = new MyAdapter(this);
+        recyclerView.setAdapter(myAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        myAdapter.addAll(events);
+        myAdapter.notifyDataSetChanged();
+
     }
+
     private void getBackendInfo() {
         retrofit = new Retrofit.Builder().baseUrl(URL_JSON)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -84,9 +94,10 @@ public class MainActivity extends AppCompatActivity {
         netInterface.getEvent().enqueue(new Callback<Events>() {
             @Override
             public void onResponse(Call<Events> call, Response<Events> response) {
+
                 events = response.body();
-                if (!events.equals(null))
-                    Log.e("my", "*** lvдl: " + String.valueOf(events.getCount()));
+                loadMainBoard(events);
+                Log.i("my", "ha hah");
             }
 
             @Override
