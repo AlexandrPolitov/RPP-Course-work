@@ -10,20 +10,12 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/items_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/title_person"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Dmitry"
-            android:textSize="24dp" />
-    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/items_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.NavigationView
 
