@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.e.myapplication.Adapters.CityAdapter;
 import com.e.myapplication.Adapters.EventsAdapter;
 import com.e.myapplication.BackendProcess.BackendPresenter;
 import com.e.myapplication.BackendProcess.DataLoader;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface.mai
     List<Result> list;
     RecyclerView recyclerView;
     EventsAdapter myAdapter;
+    CityAdapter cityAdapter;
 
     //Интерфейс, который умеет загружать данные
     MainInterface.presenter presenter;
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface.mai
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
         presenter = new BackendPresenter(this, new DataLoader());
-        presenter.getDataFromServer();
+        presenter.getDataFromServer(0);
 
     }
 
@@ -66,14 +68,10 @@ public class MainActivity extends AppCompatActivity implements MainInterface.mai
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Toast.makeText(MainActivity.this, "Events Clicked",Toast.LENGTH_LONG);
+        int itemId = menuItem.getItemId();
 
-        switch (menuItem.getItemId()) {
-            case R.id.eventsItem:
-                Toast.makeText(MainActivity.this, "Events Clicked",Toast.LENGTH_LONG).show();
-                myAdapter.clear();
-                myAdapter.notifyDataSetChanged();
-                break;
-        }
+        presenter.getDataFromServer(itemId);
+
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -91,21 +89,21 @@ public class MainActivity extends AppCompatActivity implements MainInterface.mai
     @Override
     public void setEventsToRecyclerView(Events events) {
 
-        myAdapter = new EventsAdapter(MainActivity.this);
-
-        Log.i("ATTACHING", "STAAARRRT");
-
-        recyclerView.setAdapter(myAdapter);
+        if(myAdapter == null) {
+            myAdapter = new EventsAdapter(MainActivity.this);
+            myAdapter.addAll(events);
+            myAdapter.notifyDataSetChanged();
+        }
         recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        myAdapter.addAll(events);
-        myAdapter.notifyDataSetChanged();
+        recyclerView.setAdapter(myAdapter);
 
-        Log.i("ATTACHING", "FINISHEEEED");
 
     }
 
     @Override
     public void setCityToRecyclerView(List<City> cities) {
-
+        cityAdapter = new CityAdapter();
+        cityAdapter.addAll(cities);
+        recyclerView.setAdapter(cityAdapter);
     }
 }

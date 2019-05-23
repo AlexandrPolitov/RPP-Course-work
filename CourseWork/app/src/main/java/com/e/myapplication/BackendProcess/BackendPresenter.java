@@ -3,6 +3,7 @@ package com.e.myapplication.BackendProcess;
 import android.media.SoundPool;
 
 import com.e.myapplication.MainInterface;
+import com.e.myapplication.R;
 import com.e.myapplication.pojo.City;
 import com.e.myapplication.pojo.Events;
 
@@ -25,8 +26,8 @@ public class BackendPresenter implements MainInterface.presenter, MainInterface.
 
     //Запрашиваем данные с сервера
     @Override
-    public void getDataFromServer() {
-        intractor.loadData(this);
+    public void getDataFromServer(int itemId) {
+        intractor.loadData(this, itemId);
     }
 
     //Говорим, как обращаться с данными с сервера

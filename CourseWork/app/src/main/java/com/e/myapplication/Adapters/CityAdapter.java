@@ -15,6 +15,10 @@ import java.util.List;
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder> {
     List<City> cities;
 
+    public void addAll(List<City> cities) {
+        this.cities = cities;
+    }
+
     @NonNull
     @Override
     public CityAdapter.CityViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

@@ -15,7 +15,7 @@ public interface MainInterface {
 
     //Отвечает за получение данных. Реализуется в специальном классе для делов с бэкендом
     interface presenter {
-        void getDataFromServer();
+        void getDataFromServer(int itemId);
     }
 
     //Отвечает за визуальное наполнение. Реализуется в MainActivity
@@ -38,6 +38,6 @@ public interface MainInterface {
 
         //Инициализиацирует ретрофит, получает данные и передает их
         //onLoadDataLister, который знает, как с ними обращаться
-        void loadData(onLoadDataListener listener);
+        void loadData(onLoadDataListener listener, int itemId);
     }
 }
