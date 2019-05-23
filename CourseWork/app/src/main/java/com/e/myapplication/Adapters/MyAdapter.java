@@ -1,4 +1,4 @@
-package com.e.myapplication;
+package com.e.myapplication.Adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,10 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.e.myapplication.R;
 import com.e.myapplication.pojo.Event.Result;
 import com.e.myapplication.pojo.Events;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.EventViewHolder> {
@@ -33,7 +35,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.EventViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyAdapter.EventViewHolder eventViewHolder, int i) {
         Result result = list.get(i);
+        long eventStart = result.getDates().get(0).getStart();
+        long eventEnd = result.getDates().get(0).getEnd();
+        Date eventStartDate = new Date(eventStart*1000);
+        Date eventEndDate = new Date(eventEnd*1000);
+
+        SimpleDateFormat eventDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat eventHourFormat = new SimpleDateFormat("HH:mm");
+
         eventViewHolder.title.setText(result.getTitle());
+        eventViewHolder.date.setText(eventDateFormat.format(eventStartDate));
+        Log.i("date","starts " + result.getDates().get(0).getStart());
+        Log.i("date","ends " + result.getDates().get(0).getEnd());
+        eventViewHolder.location.setText(result.getLocation().getSlug() + " (" + eventHourFormat.format(eventStartDate) + ") ");
         Glide.with(mContext).load(result.getImages().get(0).getImage()).into(eventViewHolder.imageView);
     }
 
@@ -52,13 +66,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.EventViewHolder> {
     public class EventViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView title;
-        TextView description;
+        TextView date;
+        TextView location;
 
         public EventViewHolder(View v) {
             super(v);
             imageView = v.findViewById(R.id.cover_event);
             title = v.findViewById(R.id.title_event);
-            description = v.findViewById(R.id.description_event);
+            date = v.findViewById(R.id.date_event);
+            location = v.findViewById(R.id.location_event);
         }
 
     }

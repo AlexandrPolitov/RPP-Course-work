@@ -1,6 +1,5 @@
 package com.e.myapplication;
 
-import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,39 +8,28 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.view.View;
 
-import com.e.myapplication.Net.NetInterface;
+import com.e.myapplication.Adapters.MyAdapter;
+import com.e.myapplication.BackendProcess.BackendPresenter;
+import com.e.myapplication.BackendProcess.DataLoader;
 import com.e.myapplication.pojo.Event.Result;
 import com.e.myapplication.pojo.Events;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+public class MainActivity extends AppCompatActivity implements MainInterface.mainView{
 
-public class MainActivity extends AppCompatActivity {
-
-    SanyaClass sanya = new SanyaClass();
-
-
-
-    private static final String URL_JSON = "https://kudago.com/public-api/v1.2/";
-    private NetInterface netInterface;
-    private Retrofit retrofit;
-    private Events events;
 
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle barToggle;
 
     List<Result> list;
     RecyclerView recyclerView;
+    MyAdapter myAdapter;
+
+    //Интерфейс, который умеет загружать данные
+    MainInterface.presenter presenter;
 
 
 
@@ -49,18 +37,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Get backend from KudaGo
-        getBackendInfo();
 
-        //Initializing of sideBar
+        //Инициализируем выпадающее меню
         drawerLayout = findViewById(R.id.drawerLayout);
         barToggle = new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
 
+        //Устанавливаем кнопку
         drawerLayout.addDrawerListener(barToggle);
         barToggle.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        recyclerView = findViewById(R.id.items_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+        presenter = new BackendPresenter(this, new DataLoader());
+        presenter.getDataFromServer();
 
     }
 
@@ -73,32 +65,21 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void loadMainBoard() {
-        recyclerView = findViewById(R.id.items_recycler_view);
-        MyAdapter myAdapter = new MyAdapter(this);
+    @Override
+    public void setEventsToRecyclerView(Events events) {
+
+        myAdapter = new MyAdapter(MainActivity.this);
+
+        Log.i("ATTACHING", "STAAARRRT");
+
         recyclerView.setAdapter(myAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
         myAdapter.addAll(events);
         myAdapter.notifyDataSetChanged();
-    }
-    private void getBackendInfo() {
-        retrofit = new Retrofit.Builder().baseUrl(URL_JSON)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        netInterface = retrofit.create(NetInterface.class);
 
-        netInterface.getEvent().enqueue(new Callback<Events>() {
-            @Override
-            public void onResponse(Call<Events> call, Response<Events> response) {
-                events = response.body();
-                if (!events.equals(null))
-                    Log.e("my", "*** lvдl: " + String.valueOf(events.getCount()));
-            }
+        Log.i("ATTACHING", "FINISHEEEED");
 
-            @Override
-            public void onFailure(Call<Events> call, Throwable t) {
-                Log.e("my", "ha hah");
-            }
-        });
     }
+
+
 }
