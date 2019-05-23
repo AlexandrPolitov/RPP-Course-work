@@ -3,9 +3,11 @@ package com.e.myapplication.BackendProcess;
 import android.media.SoundPool;
 
 import com.e.myapplication.MainInterface;
+import com.e.myapplication.pojo.City;
 import com.e.myapplication.pojo.Events;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BackendPresenter implements MainInterface.presenter, MainInterface.intractor.onLoadDataListener {
 
@@ -31,5 +33,10 @@ public class BackendPresenter implements MainInterface.presenter, MainInterface.
     @Override
     public void onLoadEventFinished(Events events) {
         mainView.setEventsToRecyclerView(events);
+    }
+
+    @Override
+    public void onLoadCitiesFinished(List<City> cities) {
+        mainView.setCityToRecyclerView(cities);
     }
 }

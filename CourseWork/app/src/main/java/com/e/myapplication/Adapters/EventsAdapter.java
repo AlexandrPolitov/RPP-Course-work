@@ -19,12 +19,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.EventViewHolder> {
+public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.EventViewHolder> {
     List<Result> list;
     Context mContext;
 
-    public MyAdapter(Context mContext) {
+    public EventsAdapter(Context mContext) {
         this.mContext = mContext;
+    }
+
+    public void clear() {
+        list.clear();
     }
 
     public void addAll(Events events) {
@@ -33,7 +37,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.EventViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyAdapter.EventViewHolder eventViewHolder, int i) {
+    public void onBindViewHolder(@NonNull EventsAdapter.EventViewHolder eventViewHolder, int i) {
         Result result = list.get(i);
         long eventStart = result.getDates().get(0).getStart();
         long eventEnd = result.getDates().get(0).getEnd();
@@ -53,7 +57,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.EventViewHolder> {
 
     @NonNull
     @Override
-    public MyAdapter.EventViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public EventsAdapter.EventViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.event_card_view,viewGroup,false);
         return new EventViewHolder(view);
     }

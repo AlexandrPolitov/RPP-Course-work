@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/eventsItem"
-        android:icon="@mipmap/baseline_event_black_18dp"
-        android:title="@string/events">
-    </item>
     <item android:id="@+id/lkItem"
         android:icon="@mipmap/baseline_person_black_18dp"
         android:title="@string/lk">
     </item>
+    <item android:id="@+id/eventsItem"
+        android:icon="@mipmap/baseline_event_black_18dp"
+        android:title="@string/events">
+    </item>
+
     <item android:id="@+id/cityItem"
         android:icon="@mipmap/baseline_location_city_black_18dp"
         android:title="@string/city">

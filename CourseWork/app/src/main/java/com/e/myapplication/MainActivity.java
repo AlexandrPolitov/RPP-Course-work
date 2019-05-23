@@ -1,5 +1,8 @@
 package com.e.myapplication;
 
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
-import com.e.myapplication.Adapters.MyAdapter;
+import com.e.myapplication.Adapters.EventsAdapter;
 import com.e.myapplication.BackendProcess.BackendPresenter;
 import com.e.myapplication.BackendProcess.DataLoader;
+import com.e.myapplication.pojo.City;
 import com.e.myapplication.pojo.Event.Result;
 import com.e.myapplication.pojo.Events;
 
@@ -26,17 +31,18 @@ public class MainActivity extends AppCompatActivity implements MainInterface.mai
 
     List<Result> list;
     RecyclerView recyclerView;
-    MyAdapter myAdapter;
+    EventsAdapter myAdapter;
 
     //Интерфейс, который умеет загружать данные
     MainInterface.presenter presenter;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        NavigationView navigationView = (NavigationView)findViewById(R.id.navigationView);
+        navigationView.setNavigationItemSelectedListener(this);
 
         //Инициализируем выпадающее меню
         drawerLayout = findViewById(R.id.drawerLayout);
@@ -56,8 +62,25 @@ public class MainActivity extends AppCompatActivity implements MainInterface.mai
 
     }
 
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        Toast.makeText(MainActivity.this, "Events Clicked",Toast.LENGTH_LONG);
+
+        switch (menuItem.getItemId()) {
+            case R.id.eventsItem:
+                Toast.makeText(MainActivity.this, "Events Clicked",Toast.LENGTH_LONG).show();
+                myAdapter.clear();
+                myAdapter.notifyDataSetChanged();
+                break;
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         if(barToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -68,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements MainInterface.mai
     @Override
     public void setEventsToRecyclerView(Events events) {
 
-        myAdapter = new MyAdapter(MainActivity.this);
+        myAdapter = new EventsAdapter(MainActivity.this);
 
         Log.i("ATTACHING", "STAAARRRT");
 
@@ -81,5 +104,8 @@ public class MainActivity extends AppCompatActivity implements MainInterface.mai
 
     }
 
+    @Override
+    public void setCityToRecyclerView(List<City> cities) {
 
+    }
 }
